@@ -32,8 +32,8 @@
             this.listBoxStartAss = new System.Windows.Forms.ListBox();
             this.buttonStart = new System.Windows.Forms.Button();
             this.buttonStop = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.buttonClose = new System.Windows.Forms.Button();
+            this.buttonRefresh = new System.Windows.Forms.Button();
             this.labelProc = new System.Windows.Forms.Label();
             this.labelProc2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -72,40 +72,44 @@
             this.buttonStop.TabIndex = 3;
             this.buttonStop.Text = "stop";
             this.buttonStop.UseVisualStyleBackColor = true;
+            this.buttonStop.Click += new System.EventHandler(this.buttonStop_Click);
             // 
-            // button3
+            // buttonClose
             // 
-            this.button3.Location = new System.Drawing.Point(253, 135);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 4;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
+            this.buttonClose.Location = new System.Drawing.Point(253, 135);
+            this.buttonClose.Name = "buttonClose";
+            this.buttonClose.Size = new System.Drawing.Size(75, 23);
+            this.buttonClose.TabIndex = 4;
+            this.buttonClose.Text = "close";
+            this.buttonClose.UseVisualStyleBackColor = true;
+            this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
-            // button4
+            // buttonRefresh
             // 
-            this.button4.Location = new System.Drawing.Point(253, 179);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 5;
-            this.button4.Text = "button4";
-            this.button4.UseVisualStyleBackColor = true;
+            this.buttonRefresh.Location = new System.Drawing.Point(253, 179);
+            this.buttonRefresh.Name = "buttonRefresh";
+            this.buttonRefresh.Size = new System.Drawing.Size(75, 23);
+            this.buttonRefresh.TabIndex = 5;
+            this.buttonRefresh.Text = "refresh";
+            this.buttonRefresh.UseVisualStyleBackColor = true;
             // 
             // labelProc
             // 
             this.labelProc.AutoSize = true;
-            this.labelProc.Location = new System.Drawing.Point(38, 33);
+            this.labelProc.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelProc.Location = new System.Drawing.Point(37, 22);
             this.labelProc.Name = "labelProc";
-            this.labelProc.Size = new System.Drawing.Size(114, 13);
+            this.labelProc.Size = new System.Drawing.Size(141, 17);
             this.labelProc.TabIndex = 6;
             this.labelProc.Text = "доступные процессы";
             // 
             // labelProc2
             // 
             this.labelProc2.AutoSize = true;
-            this.labelProc2.Location = new System.Drawing.Point(368, 33);
+            this.labelProc2.Font = new System.Drawing.Font("Mistral", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelProc2.Location = new System.Drawing.Point(364, 22);
             this.labelProc2.Name = "labelProc2";
-            this.labelProc2.Size = new System.Drawing.Size(124, 13);
+            this.labelProc2.Size = new System.Drawing.Size(95, 15);
             this.labelProc2.TabIndex = 7;
             this.labelProc2.Text = "запущенные процессы";
             // 
@@ -113,11 +117,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(594, 340);
+            this.ClientSize = new System.Drawing.Size(589, 319);
             this.Controls.Add(this.labelProc2);
             this.Controls.Add(this.labelProc);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.buttonRefresh);
+            this.Controls.Add(this.buttonClose);
             this.Controls.Add(this.buttonStop);
             this.Controls.Add(this.buttonStart);
             this.Controls.Add(this.listBoxStartAss);
@@ -135,8 +139,8 @@
         private System.Windows.Forms.ListBox listBoxStartAss;
         private System.Windows.Forms.Button buttonStart;
         private System.Windows.Forms.Button buttonStop;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button buttonClose;
+        private System.Windows.Forms.Button buttonRefresh;
         private System.Windows.Forms.Label labelProc;
         private System.Windows.Forms.Label labelProc2;
     }

@@ -98,6 +98,26 @@ namespace ProcessManipulation
                 RunProcess(listBoxAssembly.SelectedItem.ToString());
          }
 
+        private void buttonClose_Click(object sender, EventArgs e)
+        {
+            foreach (Process proc in processes)
+            {
+                proc.CloseMainWindow();
+                proc.Close();
+            }
+        }
+        void Kill(Process process)
+        {
+            process.Kill();
+        }
+        private void buttonStop_Click(object sender, EventArgs e)
+        {
+            
+            ExicuteOnProcessName(listBoxStartAss.SelectedItem.ToString(), Kill);
+            //listBoxStartAss.Items.Clear();
+            listBoxAssembly.Items.Add(listBoxAssembly);
+
+        }
     }
     
 }
