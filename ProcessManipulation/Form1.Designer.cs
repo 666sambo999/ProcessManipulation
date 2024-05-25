@@ -36,6 +36,7 @@
             this.buttonRefresh = new System.Windows.Forms.Button();
             this.labelProc = new System.Windows.Forms.Label();
             this.labelProc2 = new System.Windows.Forms.Label();
+            this.buttonBrauw = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listBoxAssembly
@@ -113,11 +114,22 @@
             this.labelProc2.TabIndex = 7;
             this.labelProc2.Text = "запущенные процессы";
             // 
+            // buttonBrauw
+            // 
+            this.buttonBrauw.Location = new System.Drawing.Point(253, 219);
+            this.buttonBrauw.Name = "buttonBrauw";
+            this.buttonBrauw.Size = new System.Drawing.Size(75, 23);
+            this.buttonBrauw.TabIndex = 8;
+            this.buttonBrauw.Text = "review";
+            this.buttonBrauw.UseVisualStyleBackColor = true;
+            this.buttonBrauw.Click += new System.EventHandler(this.buttonBrauw_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(589, 319);
+            this.Controls.Add(this.buttonBrauw);
             this.Controls.Add(this.labelProc2);
             this.Controls.Add(this.labelProc);
             this.Controls.Add(this.buttonRefresh);
@@ -143,6 +155,7 @@
         private System.Windows.Forms.Button buttonRefresh;
         private System.Windows.Forms.Label labelProc;
         private System.Windows.Forms.Label labelProc2;
+        private System.Windows.Forms.Button buttonBrauw;
     }
 }
 

@@ -18,36 +18,48 @@ namespace ProcessManipulation
 {
     public partial class MainForm : Form
     {
-         List<Process> processes = new List<Process>();
-         int counter = 0;
-         delegate void ProcessDelegate(Process process);
+        List<Process> processes = new List<Process>();
+        int counter = 0;
+        delegate void ProcessDelegate(Process process);
+        string directory; 
                         
          public MainForm()
          {
-              InitializeComponent();
-              LoadAvailabAssemblies();
+            InitializeComponent();
+            directory = Application.StartupPath;
+            LoadAvailabAssemblies();
          }
          private void process_Exited(object sender, EventArgs e)
          {
                 Process process = sender as Process;
                 listBoxStartAss.Items.Remove(process.ProcessName);
                 listBoxAssembly.Items.Add(process.ProcessName);
+                //MoveItems(listBoxAssembly, listBoxStartAss, process.ProcessName);
                 processes.Remove(process);
                 counter--;
                 for (int i = 0; i < processes.Count; i++)
-                    SetChileWindows(process.MainWindowHandle, $"Child {i + 1}");
+                    SetChildWindows(process.MainWindowHandle, $"Child process {i + 1}");
                 
          }
+        private void process_OutputData(object sender, EventArgs e)
+        {
+            Process process = sender as Process;
+            SendMessage(process.MainWindowHandle, WM_SETTEXT, (System.IntPtr)0, $"Child process #{processes.Count}");
+        }
          void LoadAvailabAssemblies()
          {
               listBoxAssembly.Items.Clear();
-              string except = new FileInfo(Application.ExecutablePath).Name.Split('.').First();// путь к файлу
-              string[] files = Directory.GetFiles(Application.StartupPath, "*.exe");
+              //string[] files = Directory.GetFiles(Application.StartupPath, "*.exe");
+              string[] files = Directory.GetFiles(directory, "*.exe");
               for (int i = 0; i < files.Length; i++)
               {
                   listBoxAssembly.Items.Add(files[i].Split('\\').Last().Split('.').First());
               }
-              listBoxAssembly.Items.Remove(except);
+              if (directory == Application.StartupPath)
+              {
+                    string except = new FileInfo(Application.ExecutablePath).Name.Split('.').First();// путь к файлу
+                    listBoxAssembly.Items.Remove(except);
+              }
          }
          void RunProcess(string assemblyName)
          {
@@ -55,15 +67,17 @@ namespace ProcessManipulation
              processes.Add(process);
              if (Process.GetCurrentProcess().Id == GetParentProcessId(process.Id))
              {
-                  MessageBox.Show($"{process.ProcessName}является дочерним процессом");
+                  MessageBox.Show($"{process.ProcessName} является дочерним процессом");
              }
              process.EnableRaisingEvents = true;
              process.Exited += process_Exited;
+            process.OutputDataReceived += process_OutputData;
 
-             SendMessage(process.MainWindowHandle, WM_SETTEXT, (System.IntPtr)0, $"Child process # {processes.Count}");
-             //SetChileWindows(process.MainWindowHandle, $"Child process #{processes.Count}");
-             listBoxStartAss.Items.Add(process.ProcessName);
-             listBoxAssembly.Items.Remove(process.ProcessName);
+            //SendMessage(process.MainWindowHandle, WM_SETTEXT, (System.IntPtr)0, $"Child process #{processes.Count}");
+            SetChildWindows(process.MainWindowHandle, $"Child process #{processes.Count}");
+            listBoxStartAss.Items.Add(process.ProcessName);
+            listBoxAssembly.Items.Remove(process.ProcessName);
+            //MoveItems(listBoxStartAss, listBoxAssembly);
          }
          void ExicuteOnProcessName(string name, ProcessDelegate func)
          {
@@ -83,7 +97,7 @@ namespace ProcessManipulation
              }
              return parent;
          }
-         void SetChileWindows(IntPtr handle, string text)
+         void SetChildWindows(IntPtr handle, string text)
          {
              SendMessage(handle, WM_SETTEXT, (System.IntPtr)0, text);
          }
@@ -112,11 +126,31 @@ namespace ProcessManipulation
         }
         private void buttonStop_Click(object sender, EventArgs e)
         {
-            
-            ExicuteOnProcessName(listBoxStartAss.SelectedItem.ToString(), Kill);
-            //listBoxStartAss.Items.Clear();
-            listBoxAssembly.Items.Add(listBoxAssembly);
+            if (listBoxStartAss.SelectedItem != null)
+            {
+                string selected = (listBoxStartAss.SelectedItem.ToString()); 
+                ExicuteOnProcessName(selected, Kill);
+                listBoxStartAss.Items.Remove(selected);
+            }
+        }
+        private void MoveItems(ListBox dst, ListBox src, string name)
+        {
+            if (src.SelectedItem != null)
+            {
+                dst.Items.Add(name);
+                src.Items.Remove(name);
+            }
+        }
 
+        private void buttonBrauw_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog dialog = new FolderBrowserDialog();
+            dialog.RootFolder = Environment.SpecialFolder.MyComputer;
+            dialog.SelectedPath = directory;
+            dialog.ShowDialog();
+            directory = dialog.SelectedPath;
+            //MessageBox.Show(this, directory, "Selected folfer", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            LoadAvailabAssemblies();
         }
     }
     
